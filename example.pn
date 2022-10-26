@@ -1,0 +1,17 @@
+# Concurrent threads using Petri nets
+#
+# To run this:
+#    $ python ./run_petri_net.py ./example.pn
+#
+# Elements on Petri nets annotations:
+# - P: finite set of places.
+# - T: finite set of transitions.
+# - A: awn, connect places and transitions.
+# - m0: starting number of tokens on places.
+#
+
+P = {p1, p2, p3, p4}
+T = {t1, t2, t3, t4}
+A = {{t1, p1}, {p1, t2}, {t2, p3}, {p3, t3},
+     {t3, p2}, {p2, t2}, {t3, p4}, {p4, t4}}
+m0 = {m0(p1)=2, m0(p2)=1, m0(p3)=1, m0(p4)=0}
