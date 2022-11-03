@@ -160,7 +160,15 @@ class Parser:
         self.eat(AnnotationTokenTypes.COMMA)
         output_node = self.get_refereced_transition_or_place()
         self.eat(AnnotationTokenTypes.RBRACE)
+        # TO-DO esta mal este try catch xq lo que pongas se va a saltear y va a poner peso 1
+        try:
+            self.eat(AnnotationTokenTypes.EQUAL)
+            weight = self.get_current_token().tvalue
+            self.eat(AnnotationTokenTypes.NUMBER)
+        except:
+            weight =  1
 
+        
         # Check that the nodes arent the same type
         if isinstance(input_node, type(output_node)):
             raise Exception('Awns only can be t->p or p->t')
@@ -169,7 +177,7 @@ class Parser:
 
         # Assign Awn node to transition
         ## TODO: check how awns with more weight are annotated and implement it
-        awn_new_node = AwnNode(name, 1, input_node, output_node)
+        awn_new_node = AwnNode(name, weight, input_node, output_node)
         if isinstance(input_node, TransitionNode):
             input_node.output_awns.append(awn_new_node)
         else:
