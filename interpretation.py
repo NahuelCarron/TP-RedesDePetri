@@ -74,10 +74,15 @@ class ThreadedTransition:
         # NOTE: this print is not critical, but is useful as example
         input_names = [awn.get_input_name() for awn in self.input_awns]
         output_names = [awn.get_output_name() for awn in self.output_awns]
+        tokens_input = [ str(awn.get_weight()) for awn in self.input_awns]
+        message_input =  [place + " releases " + token + " tokens" for place, token in zip(input_names,tokens_input)]
+        tokens_output = [ str(awn.get_weight()) for awn in self.output_awns]
+        message_output = [ place + " received " + token + " tokens" for place, token in zip(output_names,tokens_output)]
         print(
-            'running:'
-            f'\t[{",".join(input_names)}] => {self.name} => [{",".join(output_names)}]'
-            f'\t({len(self.resources_token_stack)} resource tokens used)'
+            '\033[;32m running:'
+            f'\t \033[;35m [{",".join(input_names)}] => \033[;33m {self.name} \033[;34m => [{",".join(output_names)}]'
+            f'\t \033[;35m {message_input}'
+            f'\t \033[;34m {message_output} \033[;37m'
         )
         time.sleep(0.5)
 
@@ -98,6 +103,8 @@ class ThreadedAwn:
         self.weight = weight
         self.input = input
         self.output = output
+    def get_weight(self) -> int:
+        return self.weight
 
     def get_input_name(self) -> str:
         """Returns input name"""
