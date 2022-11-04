@@ -160,14 +160,8 @@ class Parser:
         self.eat(AnnotationTokenTypes.COMMA)
         output_node = self.get_refereced_transition_or_place()
         self.eat(AnnotationTokenTypes.RBRACE)
-        # TO-DO esta mal este try catch xq lo que pongas se va a saltear y va a poner peso 1
-        try:
-            self.eat(AnnotationTokenTypes.EQUAL)
-            weight = self.get_current_token().tvalue
-            self.eat(AnnotationTokenTypes.NUMBER)
-        except:
-            weight =  1
-
+        
+        weight = self.eat_optional_weight()
         
         # Check that the nodes arent the same type
         if isinstance(input_node, type(output_node)):
@@ -182,6 +176,16 @@ class Parser:
             input_node.output_awns.append(awn_new_node)
         else:
             output_node.input_awns.append(awn_new_node)
+
+    def eat_optional_weight(self) -> None:
+        """Optionally eat weight"""
+        if self.get_current_token().ttype is AnnotationTokenTypes.EQUAL:
+            self.eat(AnnotationTokenTypes.EQUAL)
+            weight = self.get_current_token().tvalue
+            self.eat(AnnotationTokenTypes.NUMBER)
+        else: 
+            weight = 1
+        return weight
 
     def search_node_by_name(self, name:str):
         """Return transition or place node with same name"""
@@ -210,7 +214,7 @@ class Parser:
             self.eat(AnnotationTokenTypes.RPAREN)
             self.eat(AnnotationTokenTypes.EQUAL)
             number = self.get_current_token().tvalue
-            place_node.starting_amounts = number
+            place_node.starting_amount = number
             self.eat(AnnotationTokenTypes.NUMBER)
             self.eat_optional_comma()
 
