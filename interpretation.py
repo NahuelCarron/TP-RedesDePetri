@@ -28,7 +28,9 @@ class ThreadedPlace:
     def consume(self, amount:int) -> list:
         """Return AMOUNT of resource tokens"""
         if self.count() >= amount:
-            return self.tokens_stack[:amount]
+            result = self.tokens_stack[:amount]
+            self.tokens_stack = self.tokens_stack[amount:]
+            return result
         raise Exception('Resources not available')
 
     def produce(self, tokens: list) -> None:
