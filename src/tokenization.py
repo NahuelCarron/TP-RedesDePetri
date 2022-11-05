@@ -1,40 +1,22 @@
-###############################################
-# Tokenization                                #
-###############################################
+#!/usr/bin/env python
+#
+# Tokenization module
+#
 
+
+"""Tokenization module"""
+
+
+# Standard packages
 from re import match as re_match
-from enum import Enum
 
-class AnnotationTokenTypes(Enum):
-    """Annotation token types enum"""
-    # Petri net elements
-    PLACES = 'P'
-    PLACE = 'pn'
-    TRANSITIONS = 'T'
-    TRANSITION = 'tn'
-    AWN = 'A'
-    MOMENT_ZERO = 'm0'
-    # Others
-    LPAREN = '('
-    RPAREN = ')'
-    LBRACE = '{'
-    RBRACE = '}'
-    EQUAL = '='
-    NUMBER = '0-9'
-    COMMA = ','
+# Installed packages
+## NOTE: this is empty for now
 
-
-class AnnotationToken:
-    """Petri net annotation token, not confuse with thread token!"""
-
-    def __init__(
-            self,
-            ttype: AnnotationTokenTypes,
-            tvalue: any
-            ) -> None:
-        # Extra 't' avoids override type attribute
-        self.ttype = ttype
-        self.tvalue = tvalue
+# Local packages
+from token import (
+    AnnotationTokenTypes, AnnotationToken,
+    )
 
 
 class Lexer:
@@ -223,3 +205,7 @@ class Lexer:
             raise Exception(f'Invalid syntax! =>\n{self.get_current_text()}')
 
         return result
+
+
+if __name__ == '__main__':
+    print('Este modulo no debe ejecutarse desde consola')

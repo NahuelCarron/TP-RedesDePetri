@@ -14,18 +14,16 @@
 
 
 # Standard packages
-
-
 import sys
-from interpretation import*
-from parsing import*
-from tokenization import*
 
 # Installed packages
 ## NOTE: this is empty for now
 
 # Local packages
-## NOTE: this is empty for now
+sys.path.insert(0, './src/')
+from src.interpretation import Interpreter
+from src.parsing import Parser
+from src.tokenization import Lexer
 
 # Constants
 DEBUG = False

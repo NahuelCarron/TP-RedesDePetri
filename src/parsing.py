@@ -1,48 +1,25 @@
-###############################################
-# Parsing                                     #
-###############################################
-
-from run_petri_net import AnnotationToken, AnnotationTokenTypes
-
-
-class PetriNetNode:
-    """Petri net node class"""
-
-    def __init__(self, transitions: list) -> None:
-        self.transitions = transitions
+#!/usr/bin/env python
+#
+# Parsing module
+#
 
 
-class PlaceNode:
-    """Petri place node class"""
-
-    def __init__(self, name: str, starting_amount:int=1) -> None:
-        self.name = name
-        self.starting_amount = starting_amount
+"""Parsing module"""
 
 
-class TransitionNode:
-    """Petri place node class"""
+# Standard packages
+## NOTE: this is empty for now
 
-    def __init__(
-            self,
-            name: str,
-            input_awns: list = None,
-            output_awns: list = None
-            ) -> None:
-        self.name = name
-        self.input_awns = input_awns if input_awns else []
-        self.output_awns = output_awns if output_awns else []
+# Installed packages
+## NOTE: this is empty for now
 
-
-class AwnNode:
-    """Petri awn node class"""
-
-    def __init__(self, name, weight:int, ainput, aoutput) -> None:
-        # Extra 'a' avoids redefined-builtin
-        self.name = name
-        self.weight = weight
-        self.input = ainput
-        self.output = aoutput
+# Local packages
+from token import(
+    AnnotationToken, AnnotationTokenTypes,
+)
+from node import (
+    PetriNetNode, PlaceNode, TransitionNode, AwnNode,
+)
 
 
 class Parser:
@@ -243,3 +220,6 @@ class Parser:
         self.tokens = tokens
         return self.build_petri_net_node()
 
+
+if __name__ == '__main__':
+    print('Este modulo no debe ejecutarse desde consola')

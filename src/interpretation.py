@@ -1,11 +1,24 @@
-###############################################
-# Interpretation                              #
-###############################################
+#!/usr/bin/env python
+#
+# Interpretation module
+#
 
 
+"""Interpretation module"""
+
+
+# Standard packages
 import threading
 import time
-from parsing import AwnNode, PetriNetNode, PlaceNode, TransitionNode
+
+# Installed packages
+## NOTE: this is empty for now
+
+# Local packages
+from parsing import (
+    AwnNode, PetriNetNode,
+    PlaceNode, TransitionNode,
+)
 
 
 class ResourceToken:
@@ -207,3 +220,7 @@ class Interpreter(NodeVisitor):
         """Interprets PETRI_AST nodes into threads"""
         assert petri_ast
         return self.visit(petri_ast)
+
+
+if __name__ == '__main__':
+    print('Este modulo no debe ejecutarse desde consola')
