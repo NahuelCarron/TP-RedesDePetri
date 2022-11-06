@@ -91,6 +91,7 @@ class ThreadedTransition:
     def critical_section(self) -> None:
         """Thread critical section"""
         # NOTE: this print is not critical, but is useful as example
+        self.get_all_resources()
         input_names = [awn.get_input_name() for awn in self.input_awns]
         output_names = [awn.get_output_name() for awn in self.output_awns]
         tokens_input = [ str(awn.get_weight()) for awn in self.input_awns]
@@ -104,14 +105,14 @@ class ThreadedTransition:
             f'\t \033[;34m {message_output} \033[;37m'
         )
         time.sleep(0.5)
+        self.pass_all_resources()
 
     def run(self) -> None:
         """Run transition infinite loop"""
         while KEEP_RUNNING:
             if self.are_all_inputs_enabled():
-                self.get_all_resources()
                 self.critical_section()
-                self.pass_all_resources()
+                
 
 
 class ThreadedAwn:
