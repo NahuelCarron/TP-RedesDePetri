@@ -15,10 +15,14 @@ import time
 ## NOTE: this is empty for now
 
 # Local packages
-from parsing import (
+from src.node import (
     AwnNode, PetriNetNode,
     PlaceNode, TransitionNode,
 )
+
+
+# Global state
+KEEP_RUNNING = True
 
 
 class ResourceToken:
@@ -103,7 +107,7 @@ class ThreadedTransition:
 
     def run(self) -> None:
         """Run transition infinite loop"""
-        while True:
+        while KEEP_RUNNING:
             if self.are_all_inputs_enabled():
                 self.get_all_resources()
                 self.critical_section()

@@ -14,7 +14,7 @@ from re import match as re_match
 ## NOTE: this is empty for now
 
 # Local packages
-from token import (
+from src.token import (
     AnnotationTokenTypes, AnnotationToken,
     )
 

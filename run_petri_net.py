@@ -14,16 +14,16 @@
 
 
 # Standard packages
+from src.tokenization import Lexer
+from src.parsing import Parser
+import src.interpretation as interpretation
 import sys
 
 # Installed packages
-## NOTE: this is empty for now
+import keyboard
 
 # Local packages
 sys.path.insert(0, './src/')
-from src.interpretation import Interpreter
-from src.parsing import Parser
-from src.tokenization import Lexer
 
 # Constants
 DEBUG = False
@@ -36,14 +36,22 @@ DEBUG = False
 
 def run_petri_net(annotation: str) -> None:
     """Run concurrent threads using Petri net ANNOTATION"""
+    # Process
     tokens = Lexer().tokenize(annotation)
     if DEBUG:
         for token in tokens:
             print(f'> {token.ttype}\t\t{token.tvalue}')
     tree = Parser().parse(tokens)
-    threads = Interpreter().interpret(tree)
+    threads = interpretation.Interpreter().interpret(tree)
+    # Start
     for thread in threads:
         thread.start()
+    # Stop
+    while True:
+        if keyboard.is_pressed('a'):
+            print('Pressed key, stopping threads...')
+            interpretation.KEEP_RUNNING = False # workaround to stop threads, join doesnt works
+            break
 
 
 if __name__ == '__main__':

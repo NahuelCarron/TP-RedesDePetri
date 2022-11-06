@@ -14,10 +14,10 @@
 ## NOTE: this is empty for now
 
 # Local packages
-from token import(
+from src.token import(
     AnnotationToken, AnnotationTokenTypes,
 )
-from node import (
+from src.node import (
     PetriNetNode, PlaceNode, TransitionNode, AwnNode,
 )
 
