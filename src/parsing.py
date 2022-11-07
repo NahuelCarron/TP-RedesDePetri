@@ -52,7 +52,7 @@ class Parser:
         self.eat(AnnotationTokenTypes.EQUAL)
         self.eat(AnnotationTokenTypes.LBRACE)
 
-        while self.get_current_token().ttype is not AnnotationTokenTypes.RBRACE:
+        while True:
             node = self.build_trainsition_node()
             self.transitions_list.append(node)
             if self.get_current_token().ttype is not AnnotationTokenTypes.COMMA:
@@ -76,7 +76,7 @@ class Parser:
         self.eat(AnnotationTokenTypes.EQUAL)
         self.eat(AnnotationTokenTypes.LBRACE)
 
-        while self.get_current_token().ttype is not AnnotationTokenTypes.RBRACE:
+        while True:
             node = self.build_place_node()
             self.places_list.append(node)
             if self.get_current_token().ttype is not AnnotationTokenTypes.COMMA:
@@ -110,7 +110,7 @@ class Parser:
         self.eat(AnnotationTokenTypes.EQUAL)
         self.eat(AnnotationTokenTypes.LBRACE)
 
-        while self.get_current_token().ttype is AnnotationTokenTypes.LBRACE:
+        while True:
             self.assign_single_awn_node()
             if self.get_current_token().ttype is not AnnotationTokenTypes.COMMA:
                 break
@@ -185,7 +185,7 @@ class Parser:
         # Maybe in a future could be implemented a
         # symbols table to assign these amounts
 
-        while self.get_current_token().ttype is AnnotationTokenTypes.MOMENT_ZERO:
+        while True:
             self.eat(AnnotationTokenTypes.MOMENT_ZERO)
             self.eat(AnnotationTokenTypes.LPAREN)
             place_node = self.get_refereced_transition_or_place()
