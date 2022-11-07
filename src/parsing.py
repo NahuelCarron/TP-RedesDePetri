@@ -43,11 +43,6 @@ class Parser:
         else:
             raise SyntaxError(f'Expected {token_type} but founded {current_token_type}')
 
-    def eat_optional_comma(self) -> None:
-        """Optionally eat comma"""
-        if self.get_current_token().ttype is AnnotationTokenTypes.COMMA:
-            self.eat(AnnotationTokenTypes.COMMA)
-
     def append_transition_nodes_to_list(self) -> None:
         """
         Push T = {...} related tokens to stack
@@ -60,7 +55,9 @@ class Parser:
         while self.get_current_token().ttype is not AnnotationTokenTypes.RBRACE:
             node = self.build_trainsition_node()
             self.transitions_list.append(node)
-            self.eat_optional_comma()
+            if self.get_current_token().ttype is not AnnotationTokenTypes.COMMA:
+                break
+            self.eat(AnnotationTokenTypes.COMMA)
 
         self.eat(AnnotationTokenTypes.RBRACE)
 
@@ -82,7 +79,9 @@ class Parser:
         while self.get_current_token().ttype is not AnnotationTokenTypes.RBRACE:
             node = self.build_place_node()
             self.places_list.append(node)
-            self.eat_optional_comma()
+            if self.get_current_token().ttype is not AnnotationTokenTypes.COMMA:
+                break
+            self.eat(AnnotationTokenTypes.COMMA)
 
         self.eat(AnnotationTokenTypes.RBRACE)
 
@@ -113,7 +112,9 @@ class Parser:
 
         while self.get_current_token().ttype is AnnotationTokenTypes.LBRACE:
             self.assign_single_awn_node()
-            self.eat_optional_comma()
+            if self.get_current_token().ttype is not AnnotationTokenTypes.COMMA:
+                break
+            self.eat(AnnotationTokenTypes.COMMA)
 
         self.eat(AnnotationTokenTypes.RBRACE)
 
@@ -193,7 +194,9 @@ class Parser:
             number = self.get_current_token().tvalue
             place_node.starting_amount = number
             self.eat(AnnotationTokenTypes.NUMBER)
-            self.eat_optional_comma()
+            if self.get_current_token().ttype is not AnnotationTokenTypes.COMMA:
+                break
+            self.eat(AnnotationTokenTypes.COMMA)
 
         self.eat(AnnotationTokenTypes.RBRACE)
 
